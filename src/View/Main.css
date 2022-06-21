@@ -1,0 +1,25 @@
+.root{
+    -fx-background-color: #FDF2E9;
+}
+img.animated-gif{
+    width: 120px;
+    height:auto;
+}
+.label{
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+.menu-bar{
+    -fx-background-color: #FAE5D3;
+
+}
+.menu{
+    -fx-font-fill: white;
+}
+
+.button{
+    -fx-background-color: #34495E;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-radius: 62;
+}
