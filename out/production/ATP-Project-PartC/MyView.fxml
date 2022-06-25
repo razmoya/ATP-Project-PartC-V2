@@ -86,11 +86,10 @@
                 </GridPane>
                 <AnchorPane prefHeight="200.0" prefWidth="141.0">
                     <children>
-                        <Button fx:id="GenerateMaze" defaultButton="true" layoutX="21.0" layoutY="27.0" mnemonicParsing="false" onAction="#generateMaze" prefHeight="25.0" prefWidth="118.0" text="Play!" />
-                        <Button fx:id="save" layoutX="10.0" layoutY="169.0" mnemonicParsing="false" onAction="#saveGame" text="Save Game" visible="false" />
-                        <Button fx:id="Hint" disable="true" layoutX="1.0" layoutY="138.0" mnemonicParsing="false" onAction="#getHint" prefHeight="31.0" prefWidth="161.0" text="Do you want a clue?" />
-                        <PasswordField layoutX="13.0" layoutY="169.0" prefHeight="16.0" prefWidth="115.0" promptText="clue" />
-                        <Button fx:id="SolveMaze" layoutX="4.0" layoutY="89.0" mnemonicParsing="false" onAction="#solveMaze" prefHeight="32.0" prefWidth="132.0" text="Solve maze" visible="false" />
+                        <Button fx:id="GenerateMaze" defaultButton="true" layoutX="20.0" layoutY="25.0" mnemonicParsing="false" onAction="#generateMaze" prefHeight="25.0" prefWidth="120.0" text="Play!" />
+                        <Button fx:id="save" layoutX="20.0" layoutY="175.0" mnemonicParsing="false" onAction="#saveGame" prefHeight="25.0" prefWidth="120.0" text="Save Game" visible="false" />
+                        <Button fx:id="Hint" disable="true" layoutX="20.0" layoutY="125.0" mnemonicParsing="false" onAction="#getHint" prefHeight="25.0" prefWidth="120.0" text="Get Clue" />
+                        <Button fx:id="SolveMaze" layoutX="20.0" layoutY="75.0" mnemonicParsing="false" onAction="#solveMaze" prefHeight="25.0" prefWidth="120.0" text="Solve maze" visible="false" />
                     </children>
                 </AnchorPane>
             </children>
