@@ -86,9 +86,9 @@ public class OptionController implements Initializable {
             if (threadNum.getValue()==(String)"4")
                 core="4";
 
-            prop.setProperty("MazeAlgorithmType", algo);
-            prop.setProperty("maxTreads", core);
-            prop.setProperty("MazeType", maze);
+            prop.setProperty("threadPoolSize", core);
+            prop.setProperty("mazeGeneratingAlgorithm", maze);
+            prop.setProperty("mazeSearchingAlgorithm", algo);
             prop.store(output, null);
         }
 
