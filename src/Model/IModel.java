@@ -13,21 +13,19 @@ public interface IModel {
 
     void move(KeyCode movement);
 
-    int [][] solution(MyViewModel m, int charRow, int charCol, String x);
+    int [][] solve(MyViewModel m, int charRow, int charCol, String x);
 
-    boolean gameIsFinish();
+    boolean gameOver();
 
     void save(File file);
 
-    boolean isSolved();
-
     void load(File file);
 
-
+    boolean isSolved();
 
     int[][] getMaze();
 
-    Maze getFirstMaze();
+    Maze getOriginMaze();
 
     int[][] getSolutionArray();
 
@@ -37,9 +35,7 @@ public interface IModel {
 
     Position getEndPosition();
 
-
-
-    void setFirstMaze(Maze m);
+    void setOriginMaze(Maze m);
 
     void setMaze(int[][] maze);
 
@@ -48,5 +44,4 @@ public interface IModel {
     void setPositionRow(int row);
 
     void setGoalPosition(Position goalPosition);
-
 }

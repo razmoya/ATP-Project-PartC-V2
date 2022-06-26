@@ -1,7 +1,6 @@
 package View;
 
 import Server.Configurations;
-import javafx.application.Platform;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
@@ -22,10 +21,6 @@ public class OptionController implements Initializable {
     String maze="MyMazeGenerator";
     String core="2";
 
-    public void close() {
-        Platform.exit();
-    }
-
     public void closeWindow() {
         Stage s = (Stage) close.getScene().getWindow();
         s.close();
@@ -33,7 +28,7 @@ public class OptionController implements Initializable {
 
     public void save() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText(String.format("Settings Saved \n "+ "\n Algorithm: "+algo+ "\n MazeType: "+maze+ "\n Number of thread: "+core));
+        alert.setContentText("Settings Saved \n "+ "\n Algorithm: "+algo+ "\n MazeType: "+maze+ "\n Number of thread: "+core);
         alert.show();
     }
 
@@ -62,7 +57,7 @@ public class OptionController implements Initializable {
             }
             String text = stringBuilder.toString();
             bufferedReader.close();
-        } catch (IOException e) {
+        } catch (IOException ignored) {
         }
         if (input == null) {
             output = new FileOutputStream("Resources/config.properties");

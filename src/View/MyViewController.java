@@ -2,20 +2,15 @@ package View;
 
 import Model.MyModel;
 import ViewModel.MyViewModel;
-import algorithms.mazeGenerators.Maze;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.*;
@@ -31,20 +26,16 @@ public class MyViewController implements Observer, IView {
     public MazeDisplayer mazeDisplayer = new MazeDisplayer();
     int i = 0;
     boolean showOnce = false;
-    boolean songonce = true;
-    Thread t1;
-    boolean hint = false;
+    boolean songOnce = true;
     public javafx.scene.control.TextField txt_row;
     public javafx.scene.control.TextField txt_col;
     public javafx.scene.control.Label lbl_rowsNum;
-    public javafx.scene.control.Label lbl_columnsNum;//where user wants to go
+    public javafx.scene.control.Label lbl_columnsNum;
     public javafx.scene.control.Button GenerateMaze;
     public javafx.scene.control.Button SolveMaze;
     public javafx.scene.control.Button Hint;
     public javafx.scene.control.Button save;
     private MediaPlayer temp;
-    private int height;
-    private int width;
 
     public StringProperty characterPositionRow = new SimpleStringProperty();
     public StringProperty characterPositionColumn = new SimpleStringProperty();
@@ -61,15 +52,6 @@ public class MyViewController implements Observer, IView {
         lbl_columnsNum.textProperty().bind(viewModel.col);
     }
 
-    public void setResizeEvent() {
-        this.mazeDisplayer.widthProperty().addListener((observable, oldValue, newValue) -> {
-            mazeDisplayer.redraw();
-        });
-
-        this.mazeDisplayer.heightProperty().addListener((observable, oldValue, newValue) -> {
-            mazeDisplayer.redraw();
-        });
-    }
     @Override
     public void update(Observable o, Object arg) {
         if (o == viewModel) {
@@ -79,14 +61,13 @@ public class MyViewController implements Observer, IView {
             mazeDisplayer.setGoalPosition(viewModel.getEndPosition());
             displayMaze(viewModel.getMaze());
             GenerateMaze.setDisable(false);
-            if (viewModel.gameIsFinish() && !showOnce) {
+            if (viewModel.gameIsOver() && !showOnce) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setContentText("Game Done");
                 Music(1);
                 alert.show();
                 showOnce = true;
             }
-            //mazeDisplayer.setCharacterPosition(mazeDisplayer.getCharacterPositionRow(),mazeDisplayer.getCharacterPositionColumn());
             mazeDisplayer.redraw();
         }
     }
@@ -108,17 +89,19 @@ public class MyViewController implements Observer, IView {
     public void generateMaze() {
         mazeDisplayer.isSolved(false);
         Hint.setDisable(false);
-        if (songonce == true)
+        if (songOnce)
             Music(0);
         save.setVisible(true);
         showOnce = false;
+        int height;
         try {
-            height = Integer.valueOf(txt_row.getText());
+            height = Integer.parseInt(txt_row.getText());
         } catch (Exception e) {
             height = 10;
         }
+        int width;
         try {
-            width = Integer.valueOf(txt_col.getText());
+            width = Integer.parseInt(txt_col.getText());
         } catch (Exception e) {
             width = 10;
         }
@@ -127,41 +110,34 @@ public class MyViewController implements Observer, IView {
         mazeDisplayer.setMaze(temp);
         SolveMaze.setVisible(true);
         displayMaze(temp);
-
     }
 
-    public void solveMaze(ActionEvent actionEvent) {
+    public void solveMaze() {
         int[][] temp = viewModel.getMaze();
-        showAlert("Just a minute... solving maze");
-        int [][] sol=viewModel.solution(this.viewModel, this.viewModel.getPositionRow(), this.viewModel.getPositionCol(), "solve");
+        showAlert();
+        int [][] sol=viewModel.solve(this.viewModel, this.viewModel.getPositionRow(), this.viewModel.getPositionCol(), "solve");
         mazeDisplayer.setSolution(sol);
         mazeDisplayer.isSolved(true);
         mazeDisplayer.setMaze(temp);
         SolveMaze.setVisible(false);
     }
 
-    public void getHint(ActionEvent actionEvent) {
+    public void getHint() {
         int[][] temp = viewModel.getMaze();
-        int [][] sol=viewModel.solution(this.viewModel, this.viewModel.getPositionRow(), this.viewModel.getPositionCol(), "clue");
+        int [][] sol=viewModel.solve(this.viewModel, this.viewModel.getPositionRow(), this.viewModel.getPositionCol(), "clue");
         mazeDisplayer.setSolution(sol);
         mazeDisplayer.isSolved(true);
         mazeDisplayer.setMaze(temp);
         SolveMaze.setVisible(true);
     }
 
-    public void exit(ActionEvent actionEvent) {
+    public void exit() {
         Platform.exit();
     }
 
-    public void setMazeOriginal(Maze m) {
-        viewModel.setFirstMaze(m);
-    }
-
-
-
-    private void showAlert(String alertMessage) {
+    private void showAlert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText(alertMessage);
+        alert.setContentText("Hold on... Maze is being solved!");
         alert.show();
     }
 
@@ -171,82 +147,12 @@ public class MyViewController implements Observer, IView {
 
     }
 
-    public String getCharacterPositionRow() {
-        return characterPositionRow.get();
-    }
-
-    public StringProperty characterPositionRowProperty() {
-        return characterPositionRow;
-    }
-
-    public String getCharacterPositionColumn() {
-        return characterPositionColumn.get();
-    }
-
-    public StringProperty characterPositionColumnProperty() {
-        return characterPositionColumn;
-    }
-
     public void setResizeEvent(Scene scene) {
-        scene.widthProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-                mazeDisplayer.redraw();
-            }
-        });
-        scene.heightProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
-                mazeDisplayer.redraw();
-            }
-        });
+        scene.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) -> mazeDisplayer.redraw());
+        scene.heightProperty().addListener((observableValue, oldSceneHeight, newSceneHeight) -> mazeDisplayer.redraw());
     }
 
-    public void MazeInfo() {
-        String text = null;
-        OutputStream output = null;
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader("./resources/config.properties"));
-            if (bufferedReader == null) {//check if file exthist
-                output = new FileOutputStream("Resources/config.properties");
-            }
-            StringBuilder stringBuilder = new StringBuilder();
-            String line = bufferedReader.readLine();
-            line = bufferedReader.readLine();
-            while (line != null) {
-                stringBuilder.append(line + ",");
-                stringBuilder.append(System.lineSeparator());
-                line = bufferedReader.readLine();
-            }
-            text= stringBuilder.toString();
-            bufferedReader.close();
-        } catch (IOException e) { }
-        if(text==null) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("No Setting Found");
-            alert.setContentText("Please go to option and set what settings you want");
-            alert.show();
-        }
-        else {
-            String[] split = text.split(",");
-            String content = "";
-            content = "Maze Algo: " + splitLine(split[0] + "\n");
-            content += "Thread Number: " + splitLine(split[1].substring(4) + "\n");
-            content += "Maze Type: " + splitLine(split[2].substring(4) + "\n");
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Properties");
-            alert.setHeaderText(null);
-            alert.setContentText(content);
-            alert.show();
-        }
-    }
-
-    private String splitLine(String s) {
-        String [] splitedLine = s.split("=");
-        return splitedLine[1];
-    }
-
-    public void About(ActionEvent actionEvent) {
+    public void About() {
         try {
             Stage stage = new Stage();
             stage.setTitle("About");
@@ -257,13 +163,13 @@ public class MyViewController implements Observer, IView {
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL); //Lock the window until it closes
             stage.show();
-        } catch (Exception e) {
-//            System.out.println(e);
+        } catch (Exception e)
+        {
             System.out.println("Error About.fxml not found");
         }
     }
 
-    public void Help(ActionEvent actionEvent) {
+    public void Help(){
         try {
             Stage stage = new Stage();
             stage.setTitle("Help");
@@ -282,22 +188,14 @@ public class MyViewController implements Observer, IView {
     public void Music(int x) {
         if (temp != null)
             temp.stop();
-        String path = "";
-        if (x == 0) {
-            songonce = false;
-            path = "resources\\Wii.mp3";
-        }
-        else {
-            songonce=true;
-            path = "resources\\Wii.mp3";
-        }
-//        Media tempp = new Media(Paths.get(path).toUri().toString());
-        Media tempp = new Media(getClass().getResource("/Wii.mp3").toString());
-        temp = new MediaPlayer(tempp);
+        String path = "resources\\Wii.mp3";
+        songOnce = x != 0;
+        Media temporal = new Media(Paths.get(path).toUri().toString());
+        temp = new MediaPlayer(temporal);
         temp.play();
     }
 
-    public void Option(ActionEvent actionEvent) {
+    public void Option() {
         try {
             Stage stage = new Stage();
             stage.setTitle("Option");
@@ -316,36 +214,40 @@ public class MyViewController implements Observer, IView {
     public void saveGame() {
         FileChooser fc = new FileChooser();
         File filePath = new File("./Mazes/");
+        boolean res = true;
         if (!filePath.exists())
-            filePath.mkdir();
-        fc.setTitle("Saving maze");
-        fc.setInitialFileName("Maze Number " + i + "");
-        i++;
-        fc.setInitialDirectory(filePath);
-        File file = fc.showSaveDialog((Stage) mazeDisplayer.getScene().getWindow());
-        if (file != null)
-            viewModel.save(file);
+            res = filePath.mkdir();
+        if (res) {
+            fc.setTitle("Saving maze");
+            fc.setInitialFileName("Maze Number " + i + "");
+            i++;
+            fc.setInitialDirectory(filePath);
+            File file = fc.showSaveDialog(mazeDisplayer.getScene().getWindow());
+            if (file != null)
+                viewModel.save(file);
+        }
     }
 
     public void loadGame() {
-
         FileChooser fc = new FileChooser();
         fc.setTitle("Loading maze");
         File filePath = new File("./Mazes/");
+        boolean res = true;
         if (!filePath.exists())
-            filePath.mkdir();
-        fc.setInitialDirectory(filePath);
-
-        File file = fc.showOpenDialog(new PopupWindow() {
-        });
-        if (file != null && file.exists() && !file.isDirectory()) {
-            viewModel.load(file);
-            if (songonce==true)
-                Music(0);
-            mazeDisplayer.redraw();
+            res = filePath.mkdir();
+        if (res){
+            fc.setInitialDirectory(filePath);
+            File file = fc.showOpenDialog(new PopupWindow() {
+            });
+            if (file != null && file.exists() && !file.isDirectory()) {
+                viewModel.load(file);
+                if (songOnce)
+                    Music(0);
+                mazeDisplayer.redraw();
+            }
         }
     }
-    public void mouseClicked(MouseEvent mouseEvent) {
+    public void mouseClicked() {
         this.mazeDisplayer.requestFocus();
     }
 }

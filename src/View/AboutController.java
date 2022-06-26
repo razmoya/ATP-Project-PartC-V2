@@ -1,6 +1,5 @@
 package View;
 
-import javafx.application.Platform;
 import javafx.fxml.Initializable;
 import javafx.stage.Stage;
 
@@ -15,16 +14,11 @@ public class AboutController extends Observable implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         textInformation.setWrapText(true);
-        textInformation.setText("We are Gad and Raz and we hope you enjoy to play\n" +
-                "We made for you a game for solve mazes.\n" +
-                "We use Prim's Algorithms to build random mazes.\n" +
-                "You can try to solve alone, use a hint or to see the complete solution. the algorithms we used to find a solution are:" +
-                " DFS, BFS,BEST FS.");
-
-    }
-
-    public void close() {
-        Platform.exit();
+        textInformation.setText("""
+                This is a maze game based on Alice In Wonderland!
+                Help Alice reach the white rabbit and escape from the queen of hearts.
+                If you're having difficulties, try getting a clue or use the auto solver.
+                This game is brought to you by Gad and Raz LTD.""");
     }
 
     public void closeWindow() {
