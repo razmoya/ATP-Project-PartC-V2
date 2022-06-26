@@ -55,7 +55,7 @@ public class MyViewController implements Observer, IView {
     @Override
     public void update(Observable o, Object arg) {
         if (o == viewModel) {
-            mazeDisplayer.endposition(viewModel.getEndPosition());
+            mazeDisplayer.endPosition(viewModel.getEndPosition());
             mazeDisplayer.setMaze(viewModel.getMaze());
             mazeDisplayer.setCharacterPosition(viewModel.getPositionRow(), viewModel.getPositionCol());
             mazeDisplayer.setGoalPosition(viewModel.getEndPosition());
@@ -77,7 +77,7 @@ public class MyViewController implements Observer, IView {
         int characterPositionRow = viewModel.getPositionRow();
         int characterPositionColumn = viewModel.getPositionCol();
         mazeDisplayer.setCharacterPosition(characterPositionRow, characterPositionColumn);
-        mazeDisplayer.endposition(viewModel.getEndPosition());
+        mazeDisplayer.endPosition(viewModel.getEndPosition());
         mazeDisplayer.Solved(viewModel.getSolutionArray());
         mazeDisplayer.isSolved(viewModel.isSolved());
         this.characterPositionRow.set(characterPositionRow + "");
@@ -106,7 +106,7 @@ public class MyViewController implements Observer, IView {
             width = 10;
         }
         int[][] temp = viewModel.generateMaze(height, width);
-        mazeDisplayer.endposition(viewModel.getEndPosition());
+        mazeDisplayer.endPosition(viewModel.getEndPosition());
         mazeDisplayer.setMaze(temp);
         SolveMaze.setVisible(true);
         displayMaze(temp);

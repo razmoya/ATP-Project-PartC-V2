@@ -19,7 +19,7 @@
     <ChoiceBox fx:id="threadNum" layoutX="389.0" layoutY="142.0" prefWidth="150.0"/>
     <ChoiceBox fx:id="mazeType" layoutX="205.0" layoutY="142.0" prefWidth="150.0"/>
     <ChoiceBox fx:id="algorithms" layoutX="14.0" layoutY="142.0" prefWidth="150.0"/>
-    <Text layoutX="183.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Chose Properties" underline="true"
+    <Text layoutX="183.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose Properties" underline="true"
           wrappingWidth="181.00000661611557">
         <font>
             <Font name="David" size="24.0"/>

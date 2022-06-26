@@ -27,8 +27,8 @@ public class Main extends Application {
         Scene scene = new Scene(root,800,700);
         primaryStage.setMinHeight(800);
         primaryStage.setMinWidth(700);
-        primaryStage.setTitle("Maze-Game");
-        primaryStage.getIcons().add(new Image("file:resources/images/smiili.png"));
+        primaryStage.setTitle("Alice In Wonderland Maze Game");
+        primaryStage.getIcons().add(new Image("file:resources/images/Icon.jpeg"));
         scene.getStylesheets().add("View/Main.css");
 
         MyViewController view = fxmlLoader.getController();

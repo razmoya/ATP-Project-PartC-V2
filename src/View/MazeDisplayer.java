@@ -1,25 +1,15 @@
 package View;
 
-import ViewModel.MyViewModel;
 import algorithms.mazeGenerators.Position;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.event.EventHandler;
-import javafx.fxml.Initializable;
+
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 
-import javax.swing.plaf.synth.SynthGraphicsUtils;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.net.URL;
-import java.util.ResourceBundle;
+
 
 
 
@@ -40,7 +30,7 @@ public class MazeDisplayer extends Canvas {
         redraw();
     }
 
-    public void endposition(Position end) {
+    public void endPosition(Position end) {
         endPosition=end;
 
     }
@@ -67,8 +57,8 @@ public class MazeDisplayer extends Canvas {
             try {
                 GraphicsContext graphicsContext2D = getGraphicsContext2D();
                 graphicsContext2D.clearRect(0, 0, getWidth(), getHeight());
-                Image wallImage = new Image(new FileInputStream("resources/images/6252539.jpg"));
-                Image charaImage= new Image(new FileInputStream("resources/images/b.png"));
+                Image wallImage = new Image(new FileInputStream("resources/images/CardWall.jpeg"));
+                Image charaImage= new Image(new FileInputStream("resources/images/AliceCharacter.jpeg"));
 
                 //Draw Maze
                 for (int i = 0; i < maze.length; i++) {
@@ -82,7 +72,7 @@ public class MazeDisplayer extends Canvas {
                 graphicsContext2D.drawImage(charaImage ,col * cellWidth, row * cellHeight, cellWidth, cellHeight);
 
                 //draw end point
-                Image endPos = new Image(new FileInputStream("resources/images/land.png"));
+                Image endPos = new Image(new FileInputStream("resources/images/GoalRabbit.jpeg"));
                 graphicsContext2D.drawImage(endPos, endPosition.getColumnIndex() * cellWidth, endPosition.getRowIndex() * cellHeight, cellWidth, cellHeight);
 
                 //Draw solution
@@ -94,8 +84,7 @@ public class MazeDisplayer extends Canvas {
                         graphicsContext2D.drawImage(SolutionImage, y * cellWidth, x * cellHeight, cellWidth, cellHeight);
                     }
                 }
-//                Image StartPoint = new Image(new FileInputStream("resources/images/knesset.jpg"));
-//                graphicsContext2D.drawImage(StartPoint, 0, 0, cellWidth, cellHeight);
+//          graphicsContext2D.drawImage(StartPoint, 0, 0, cellWidth, cellHeight);
             } catch (FileNotFoundException e) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setContentText(String.format("Image not exist: %s", e.getMessage()));
@@ -105,24 +94,6 @@ public class MazeDisplayer extends Canvas {
     }
     ////////////////////////check if we need
     //region Properties
-    private StringProperty ImageFileWall = new SimpleStringProperty();
-    private StringProperty ImageFileCharacter = new SimpleStringProperty();
-
-    public String getImageFileNameWall() {
-        return ImageFileWall.get();
-    }
-
-    public void setImageFileNameWall(String imageFileNameWall) {
-        this.ImageFileWall.set(imageFileNameWall);
-    }
-
-    public String getImageFileNameCharacter() {
-        return ImageFileCharacter.get();
-    }
-
-    public void setImageFileNameCharacter(String imageFileNameCharacter) {
-        this.ImageFileCharacter.set(imageFileNameCharacter);
-    }
 
     public void isSolved(boolean solved) {
         this.gameFinish = solved;
@@ -135,6 +106,4 @@ public class MazeDisplayer extends Canvas {
     public void setSolution(int[][] sol) {
         solutionArray=sol;
     }
-
-
 }
