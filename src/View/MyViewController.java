@@ -10,6 +10,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -62,8 +65,20 @@ public class MyViewController implements Observer, IView {
             displayMaze(viewModel.getMaze());
             GenerateMaze.setDisable(false);
             if (viewModel.gameIsOver() && !showOnce) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setContentText("Game Done");
+                Alert alert = new Alert(Alert.AlertType.NONE);
+                alert.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
+                alert.getDialogPane().lookupButton(ButtonType.CLOSE).setStyle("-fx-font: 24 david;");
+                alert.setContentText("Alice is free!");
+                alert.getDialogPane().setStyle("-fx-font: 48 david;");
+                try {
+                    Image image = new Image(new FileInputStream("resources/images/EndPic.jpeg"));
+                    ImageView imageView = new ImageView(image);
+                    imageView.setFitHeight(300);
+                    imageView.setFitWidth(300);
+                    alert.setGraphic(imageView);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
                 Music(1);
                 alert.show();
                 showOnce = true;
