@@ -81,19 +81,19 @@ public class MyModel extends Observable implements IModel {
         int r = row;
         int c = col;
         switch (movement) {
-            case DIGIT8 :case NUMPAD8:
+            case UP :case NUMPAD8:
                 if (ifLegalMove(r - 1, c))
                     this.row--;
                 break;
-            case DIGIT2 :case NUMPAD2:
+            case DOWN :case NUMPAD2:
                 if (ifLegalMove(r + 1, c))
                     this.row++;
                 break;
-            case DIGIT6 :case NUMPAD6:
+            case RIGHT :case NUMPAD6:
                 if (ifLegalMove(r, c + 1))
                     this.col++;
                 break;
-            case DIGIT4 :case NUMPAD4:
+            case LEFT :case NUMPAD4:
                 if (ifLegalMove(r, c - 1))
                     this.col--;
                 break;

@@ -5,11 +5,13 @@ import ViewModel.MyViewModel;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -68,6 +70,7 @@ public class MyViewController implements Observer, IView {
                 Alert alert = new Alert(Alert.AlertType.NONE);
                 alert.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
                 alert.getDialogPane().lookupButton(ButtonType.CLOSE).setStyle("-fx-font: 24 david;");
+
                 alert.setContentText("Alice is free!");
                 alert.getDialogPane().setStyle("-fx-font: 48 david;");
                 try {
@@ -86,6 +89,9 @@ public class MyViewController implements Observer, IView {
 
                 Music(1);
                 alert.show();
+                alert.getDialogPane().lookupButton(ButtonType.CLOSE).addEventFilter(ActionEvent.ACTION, event ->
+                        Music(0)
+                );
                 showOnce = true;
             }
             mazeDisplayer.redraw();
@@ -210,9 +216,12 @@ public class MyViewController implements Observer, IView {
             temp.stop();
         String path = "resources\\Wii.mp3";
         songOnce = x != 0;
-        Media temporal = new Media(new File("src/song.mp3").toURI().toString());
-        temp = new MediaPlayer(temporal);
-        temp.play();
+        if (songOnce){
+            Media temporal = new Media(new File("src/song.mp3").toURI().toString());
+            temp = new MediaPlayer(temporal);
+            temp.play();
+        }
+
     }
 
 
