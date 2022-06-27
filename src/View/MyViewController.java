@@ -19,7 +19,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.*;
 
 import java.io.*;
-import java.nio.file.Paths;
+import java.net.URISyntaxException;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -79,6 +79,11 @@ public class MyViewController implements Observer, IView {
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
+                //Media sound = null;
+                //Media sound = new Media(new File("src/song.mp3").toURI().toString());
+                //MediaPlayer mediaPlayer = new MediaPlayer(sound);
+                //mediaPlayer.play();
+
                 Music(1);
                 alert.show();
                 showOnce = true;
@@ -104,8 +109,8 @@ public class MyViewController implements Observer, IView {
     public void generateMaze() {
         mazeDisplayer.isSolved(false);
         Hint.setDisable(false);
-        if (songOnce)
-            Music(0);
+        //if (songOnce)
+        //    Music(0);
         save.setVisible(true);
         showOnce = false;
         int height;
@@ -205,10 +210,11 @@ public class MyViewController implements Observer, IView {
             temp.stop();
         String path = "resources\\Wii.mp3";
         songOnce = x != 0;
-        Media temporal = new Media(Paths.get(path).toUri().toString());
+        Media temporal = new Media(new File("src/song.mp3").toURI().toString());
         temp = new MediaPlayer(temporal);
         temp.play();
     }
+
 
     public void Option() {
         try {
@@ -256,8 +262,8 @@ public class MyViewController implements Observer, IView {
             });
             if (file != null && file.exists() && !file.isDirectory()) {
                 viewModel.load(file);
-                if (songOnce)
-                    Music(0);
+                //if (songOnce)
+                //   Music(1);
                 mazeDisplayer.redraw();
             }
         }
