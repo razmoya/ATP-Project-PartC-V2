@@ -33,7 +33,6 @@ public class MyViewController implements Observer, IView {
     public MazeDisplayer mazeDisplayer = new MazeDisplayer();
     int i = 0;
     boolean showOnce = false;
-    boolean songOnce = true;
     public javafx.scene.control.TextField txt_row;
     public javafx.scene.control.TextField txt_col;
     public javafx.scene.control.Label lbl_rowsNum;
@@ -81,10 +80,10 @@ public class MyViewController implements Observer, IView {
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
-                Music(1);
+                Music(0);
                 alert.show();
                 alert.getDialogPane().lookupButton(ButtonType.CLOSE).addEventFilter(ActionEvent.ACTION, event ->
-                        Music(0)
+                        temp.stop()
                 );
                 showOnce = true;
             }
@@ -109,10 +108,9 @@ public class MyViewController implements Observer, IView {
     public void generateMaze() {
         mazeDisplayer.isSolved(false);
         Hint.setDisable(false);
-//        if (songOnce)
-//            Music(0);
         save.setVisible(true);
         showOnce = false;
+        Music(1);
         int height;
         try {
             height = Integer.parseInt(txt_row.getText());
@@ -207,15 +205,18 @@ public class MyViewController implements Observer, IView {
     }
 
     public void Music(int x) {
+        String path = "";
         if (temp != null)
             temp.stop();
-        String path = "resources\\song.mp3";
-        songOnce = x != 0;
-        if (songOnce){
-            Media temporal = new Media(Paths.get(path).toUri().toString());
-            temp = new MediaPlayer(temporal);
-            temp.play();
+        if (x == 0){
+            path = "resources\\song.mp3";
         }
+        if (x == 1){
+            path = "resources\\Theme.mp3";
+        }
+        Media temporal = new Media(Paths.get(path).toUri().toString());
+        temp = new MediaPlayer(temporal);
+        temp.play();
     }
 
     public void Option() {
