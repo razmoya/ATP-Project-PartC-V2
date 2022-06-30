@@ -1,5 +1,5 @@
 .root{
-    -fx-background-color: #FDF2E9;
+    -fx-background-color: #e4eeff;
 }
 img.animated-gif{
     width: 120px;
@@ -10,7 +10,7 @@ img.animated-gif{
     -fx-font-weight: bold;
 }
 .menu-bar{
-    -fx-background-color: #FAE5D3;
+    -fx-background-color: #b2ceff;
 
 }
 .menu{

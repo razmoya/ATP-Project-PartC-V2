@@ -19,7 +19,9 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Observable;
 
-
+/**
+ * This class holds the logic to the game. It is observed by the ViewModel.
+ */
 public class MyModel extends Observable implements IModel {
 
     private int row;
@@ -31,8 +33,12 @@ public class MyModel extends Observable implements IModel {
     private boolean solved;
     private boolean gameIsOver;
 
-//    private ExecutorService threadPool = Executors.newCachedThreadPool();
-
+    /**
+     * Generate a maze using the logic from part 2.
+     * @param row1 number of rows
+     * @param col1 number of cols
+     * @return int array that represents the maze
+     */
     public int[][] generateMaze(int row1, int col1){
         Server serverMazeGenerator;
         serverMazeGenerator = new Server(5400, 1000, new ServerStrategyGenerateMaze());
@@ -76,24 +82,29 @@ public class MyModel extends Observable implements IModel {
         notifyObservers();
         return maze;
     }
+
+    /**
+     * This function is used to move the character.
+     * @param movement the movement entered.
+     */
     @Override
     public void move(KeyCode movement){
         int r = row;
         int c = col;
         switch (movement) {
-            case DIGIT8 :case NUMPAD8:
+            case UP :case NUMPAD8:
                 if (ifLegalMove(r - 1, c))
                     this.row--;
                 break;
-            case DIGIT2 :case NUMPAD2:
+            case DOWN :case NUMPAD2:
                 if (ifLegalMove(r + 1, c))
                     this.row++;
                 break;
-            case DIGIT6 :case NUMPAD6:
+            case RIGHT :case NUMPAD6:
                 if (ifLegalMove(r, c + 1))
                     this.col++;
                 break;
-            case DIGIT4 :case NUMPAD4:
+            case LEFT :case NUMPAD4:
                 if (ifLegalMove(r, c - 1))
                     this.col--;
                 break;
@@ -132,6 +143,14 @@ public class MyModel extends Observable implements IModel {
         notifyObservers();
     }
 
+    /**
+     * Solve the maze using the logic from part 2.
+     * @param m a ViewModel
+     * @param charRow current row
+     * @param charCol current col
+     * @param x to choose between solution and hint.
+     * @return int array of solution (or hint).
+     */
     public int[][] solve(MyViewModel m, int charRow, int charCol, String x){
         Server serverSolveMaze;
         serverSolveMaze = new Server(5401, 1000, new ServerStrategySolveSearchProblem());
@@ -158,9 +177,10 @@ public class MyModel extends Observable implements IModel {
                             }
                         }
                         else if (x.equals("clue")){
-                            int i = 1;
-                            sol[0][i] = ((MazeState) (mazeSolutionSteps.get(i))).getPos().getRowIndex();
-                            sol[1][i] = ((MazeState) (mazeSolutionSteps.get(i))).getPos().getColumnIndex();
+                            for (int i = 0; i < mazeSolutionSteps.size(); i++) {
+                                sol[0][i] = ((MazeState)(mazeSolutionSteps.get(1))).getPos().getRowIndex();
+                                sol[1][i] = ((MazeState)(mazeSolutionSteps.get(1))).getPos().getColumnIndex();
+                            }
                         }
                         setChanged();
                         notifyObservers();
@@ -177,6 +197,10 @@ public class MyModel extends Observable implements IModel {
         return sol;
     }
 
+    /**
+     * This function saves the current maze.
+     * @param file file to save.
+     */
     public void save(File file){
         try {
             FileOutputStream outputStream = new FileOutputStream(file);
@@ -190,15 +214,24 @@ public class MyModel extends Observable implements IModel {
         }
     }
 
+    /**
+     * Check if game is over
+     * @return bool
+     */
     public boolean gameOver(){
         return this.gameIsOver;
     }
 
+    /**
+     * check if maze has been solved
+     * @return bool
+     */
     public boolean isSolved(){
         return this.solved;
     }
     /**
-     * load file and create maze according the file
+     * Load a file that represents a maze to the game.
+     * @param file file to load.
      */
     public void load(File file){
         try {
@@ -224,51 +257,51 @@ public class MyModel extends Observable implements IModel {
     }
 
     /**
-     * getter
+     * Original maze getter
      * @return original maze
      */
     public Maze getOriginMaze(){
         return  this.originMaze;
     }
     /**
-     * getter
-     * @return correct maze
+     * Current maze getter
+     * @return Current maze
      */
     public int[][] getMaze(){
         return this.maze;
     }
     /**
-     * getter
-     * @return the final solution maze in array
+     * Solution getter
+     * @return solution array.
      */
     public int[][] getSolutionArray(){
         return  this.sol;
     }
     /**
-     * getter
-     * @return row position of character
+     * Row getter
+     * @return row position of the character
      */
     public int getPositionRow(){
         return this.row;
     }
     /**
-     * getter
-     * @return col position of character
+     * Col getter
+     * @return col position of the character
      */
     public int getPositionCol(){
         return  this.col;
     }
     /**
-     * getter
-     * @return end position of character
+     * End position getter
+     * @return end position of the character
      */
     public Position getEndPosition(){
         return this.endPosition;
     }
 
-
     /**
-     * setter
+     * Original maze setter
+     * @param m a maze to set origin from
      */
     public void setOriginMaze(Maze m){
         int row = m.getRows();
@@ -279,31 +312,32 @@ public class MyModel extends Observable implements IModel {
                 originMaze.getMaze()[i][j] = m.getMaze()[i][j];
     }
     /**
-     * setter
+     * Maze setter
+     * @param maze the maze to set
      */
     public void setMaze(int[][] maze){
         this.maze=maze;
     }
     /**
-     * setter
+     * Column setter
      */
     public void setPositionCol(int col){
         this.col=col;
     }
     /**
-     * setter
+     * Row setter
      */
     public void setPositionRow(int row){
         this.row=row;
     }
     /**
-     * setter
+     * End position setter
      */
     public void setGoalPosition(Position goalPosition){
         this.endPosition=goalPosition;
     }
     /**
-     * do deep copy to maze2
+     * Deep copy input to our maze.
      */
     private void deepCopyMaze(Maze m) {
         int row = m.getRows();
@@ -313,7 +347,14 @@ public class MyModel extends Observable implements IModel {
             for (int j = 0; j < col; j++)
                 maze[i][j] = m.getMaze()[i][j];
     }
-    private boolean ifLegalMove(int x, int y) {
-        return x >= 0 && y >= 0 && x <= maze.length - 1 && y <= maze[0].length - 1 && (this.maze[x][y] != 1);
+
+    /**
+     * Check if move is legal
+     * @param r row
+     * @param c col
+     * @return bool
+     */
+    private boolean ifLegalMove(int r, int c) {
+        return r >= 0 && c >= 0 && r <= maze.length - 1 && c <= maze[0].length - 1 && (this.maze[r][c] != 1);
     }
 }

@@ -56,16 +56,16 @@
                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                 </rowConstraints>
                 <VBox prefHeight="200.0" prefWidth="100.0">
-                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Row" translateX="6.0" translateY="5.0"
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Row" translateX="15.0" translateY="5.0"
                           translateZ="24.0"/>
                 </VBox>
                 <TextField fx:id="txt_col" text="10" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
                 <TextField fx:id="txt_row" text="10" GridPane.columnIndex="1"/>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Col" translateX="8.0" GridPane.rowIndex="1"/>
-                <Label fx:id="lbl_rowsNum" text="Row" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-                <Label fx:id="lbl_columnsNum" text="Col" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Row now" GridPane.rowIndex="2"/>
-                <Text layoutX="10.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Col now"
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Col" translateX="15.0" GridPane.rowIndex="1"/>
+                <Label fx:id="lbl_rowsNum" text="Row" translateX="100" GridPane.rowIndex="2"/>
+                <Label fx:id="lbl_columnsNum" text="Col" translateX="100" GridPane.rowIndex="3"/>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Row now" translateX="15" GridPane.rowIndex="2"/>
+                <Text layoutX="10.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Col now" translateX="15"
                       GridPane.rowIndex="3"/>
             </GridPane>
             <AnchorPane prefHeight="200.0" prefWidth="141.0">

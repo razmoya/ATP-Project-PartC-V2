@@ -10,6 +10,10 @@ import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * This class merges between the input from the View and the logic from the Model.
+ * Functions logic comes from the model.
+ */
 public class MyViewModel extends Observable implements Observer {
 
     private final IModel model;
@@ -20,6 +24,10 @@ public class MyViewModel extends Observable implements Observer {
     public StringProperty row;
     public StringProperty col;
 
+    /**
+     * ViewModel constructor
+     * @param model a model object
+     */
     public MyViewModel(IModel model) {
         this.model = model;
         rowIndex=0;

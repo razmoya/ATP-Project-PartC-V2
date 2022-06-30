@@ -77,14 +77,13 @@ public class MazeDisplayer extends Canvas {
 
                 //Draw solution
                 if (gameFinish) {
-                    Image SolutionImage = new Image(new FileInputStream("resources/images/steps.jpg"));
-                    for (int i = 0; i < solutionArray[0].length - 1; i++) {
+                    Image SolutionImage = new Image(new FileInputStream("resources/images/Path.jpg"));
+                    for (int i = 1; i < solutionArray[0].length - 1; i++) {
                         int x = solutionArray[0][i];
                         int y = solutionArray[1][i];
                         graphicsContext2D.drawImage(SolutionImage, y * cellWidth, x * cellHeight, cellWidth, cellHeight);
                     }
                 }
-//          graphicsContext2D.drawImage(StartPoint, 0, 0, cellWidth, cellHeight);
             } catch (FileNotFoundException e) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setContentText(String.format("Image not exist: %s", e.getMessage()));
@@ -92,8 +91,6 @@ public class MazeDisplayer extends Canvas {
             }
         }
     }
-    ////////////////////////check if we need
-    //region Properties
 
     public void isSolved(boolean solved) {
         this.gameFinish = solved;

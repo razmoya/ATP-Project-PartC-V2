@@ -5,6 +5,7 @@ import ViewModel.MyViewModel;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,6 +24,9 @@ import java.nio.file.Paths;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * This class controls the game visualizations through the ViewModel and the Maze Display
+ */
 public class MyViewController implements Observer, IView {
     @FXML
     private MyViewModel viewModel = new MyViewModel(new MyModel());
@@ -46,8 +50,6 @@ public class MyViewController implements Observer, IView {
     public void setViewModel(MyViewModel viewModel) {
         this.viewModel = viewModel;
         bindProperties(viewModel);
-
-
     }
 
     private void bindProperties(MyViewModel viewModel) {
@@ -81,6 +83,9 @@ public class MyViewController implements Observer, IView {
                 }
                 Music(1);
                 alert.show();
+                alert.getDialogPane().lookupButton(ButtonType.CLOSE).addEventFilter(ActionEvent.ACTION, event ->
+                        Music(0)
+                );
                 showOnce = true;
             }
             mazeDisplayer.redraw();
@@ -104,8 +109,8 @@ public class MyViewController implements Observer, IView {
     public void generateMaze() {
         mazeDisplayer.isSolved(false);
         Hint.setDisable(false);
-        if (songOnce)
-            Music(0);
+//        if (songOnce)
+//            Music(0);
         save.setVisible(true);
         showOnce = false;
         int height;
@@ -125,6 +130,8 @@ public class MyViewController implements Observer, IView {
         mazeDisplayer.setMaze(temp);
         SolveMaze.setVisible(true);
         displayMaze(temp);
+//        Stage s = (Stage) mazeDisplayer.getScene().getWindow();
+//        s.requestFocus();
     }
 
     public void solveMaze() {
@@ -159,7 +166,6 @@ public class MyViewController implements Observer, IView {
     public void KeyPressed(KeyEvent key) {
         viewModel.move(key.getCode());
         key.consume();
-
     }
 
     public void setResizeEvent(Scene scene) {
@@ -203,11 +209,13 @@ public class MyViewController implements Observer, IView {
     public void Music(int x) {
         if (temp != null)
             temp.stop();
-        String path = "resources\\Wii.mp3";
+        String path = "resources\\song.mp3";
         songOnce = x != 0;
-        Media temporal = new Media(Paths.get(path).toUri().toString());
-        temp = new MediaPlayer(temporal);
-        temp.play();
+        if (songOnce){
+            Media temporal = new Media(Paths.get(path).toUri().toString());
+            temp = new MediaPlayer(temporal);
+            temp.play();
+        }
     }
 
     public void Option() {
@@ -256,8 +264,8 @@ public class MyViewController implements Observer, IView {
             });
             if (file != null && file.exists() && !file.isDirectory()) {
                 viewModel.load(file);
-                if (songOnce)
-                    Music(0);
+//                if (songOnce)
+//                    Music(0);
                 mazeDisplayer.redraw();
             }
         }
