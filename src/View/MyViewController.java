@@ -46,6 +46,8 @@ public class MyViewController implements Observer, IView {
     public StringProperty characterPositionRow = new SimpleStringProperty();
     public StringProperty characterPositionColumn = new SimpleStringProperty();
 
+    private boolean wasGenerated = false;
+
     public void setViewModel(MyViewModel viewModel) {
         this.viewModel = viewModel;
         bindProperties(viewModel);
@@ -106,6 +108,7 @@ public class MyViewController implements Observer, IView {
     }
 
     public void generateMaze() {
+        setGen(true);
         mazeDisplayer.isSolved(false);
         Hint.setDisable(false);
         save.setVisible(true);
@@ -128,8 +131,7 @@ public class MyViewController implements Observer, IView {
         mazeDisplayer.setMaze(temp);
         SolveMaze.setVisible(true);
         displayMaze(temp);
-//        Stage s = (Stage) mazeDisplayer.getScene().getWindow();
-//        s.requestFocus();
+        this.mazeDisplayer.requestFocus();
     }
 
     public void solveMaze() {
@@ -236,6 +238,15 @@ public class MyViewController implements Observer, IView {
     }
 
     public void saveGame() {
+        if (!getGen()){
+            Alert alert = new Alert(Alert.AlertType.NONE);
+            alert.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
+            alert.getDialogPane().lookupButton(ButtonType.CLOSE).setStyle("-fx-font: 24 david;");
+            alert.setContentText("No maze to save!");
+            alert.getDialogPane().setStyle("-fx-font: 48 david;");
+            alert.show();
+            return;
+        }
         FileChooser fc = new FileChooser();
         File filePath = new File("./Mazes/");
         boolean res = true;
@@ -253,6 +264,15 @@ public class MyViewController implements Observer, IView {
     }
 
     public void loadGame() {
+        if (!getGen()){
+            Alert alert = new Alert(Alert.AlertType.NONE);
+            alert.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
+            alert.getDialogPane().lookupButton(ButtonType.CLOSE).setStyle("-fx-font: 24 david;");
+            alert.setContentText("No maze to load!");
+            alert.getDialogPane().setStyle("-fx-font: 48 david;");
+            alert.show();
+            return;
+        }
         FileChooser fc = new FileChooser();
         fc.setTitle("Loading maze");
         File filePath = new File("./Mazes/");
@@ -265,13 +285,22 @@ public class MyViewController implements Observer, IView {
             });
             if (file != null && file.exists() && !file.isDirectory()) {
                 viewModel.load(file);
-//                if (songOnce)
-//                    Music(0);
+                temp.stop();
+                Music(1);
                 mazeDisplayer.redraw();
             }
         }
     }
+
     public void mouseClicked() {
         this.mazeDisplayer.requestFocus();
+    }
+
+    public boolean getGen(){
+        return wasGenerated;
+    }
+
+    public void setGen(boolean res){
+        wasGenerated = res;
     }
 }

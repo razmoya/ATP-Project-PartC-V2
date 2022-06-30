@@ -92,19 +92,19 @@ public class MyModel extends Observable implements IModel {
         int r = row;
         int c = col;
         switch (movement) {
-            case UP :case NUMPAD8:
+            case UP: case DIGIT8: case NUMPAD8:
                 if (ifLegalMove(r - 1, c))
                     this.row--;
                 break;
-            case DOWN :case NUMPAD2:
+            case DOWN: case DIGIT2: case NUMPAD2:
                 if (ifLegalMove(r + 1, c))
                     this.row++;
                 break;
-            case RIGHT :case NUMPAD6:
+            case RIGHT: case DIGIT6: case NUMPAD6:
                 if (ifLegalMove(r, c + 1))
                     this.col++;
                 break;
-            case LEFT :case NUMPAD4:
+            case LEFT: case DIGIT4: case NUMPAD4:
                 if (ifLegalMove(r, c - 1))
                     this.col--;
                 break;
@@ -177,9 +177,16 @@ public class MyModel extends Observable implements IModel {
                             }
                         }
                         else if (x.equals("clue")){
+                            int j = 1;
                             for (int i = 0; i < mazeSolutionSteps.size(); i++) {
-                                sol[0][i] = ((MazeState)(mazeSolutionSteps.get(1))).getPos().getRowIndex();
-                                sol[1][i] = ((MazeState)(mazeSolutionSteps.get(1))).getPos().getColumnIndex();
+                                if (((MazeState) (mazeSolutionSteps.get(i))).getPos().getRowIndex() == row
+                                        && ((MazeState) (mazeSolutionSteps.get(i))).getPos().getColumnIndex() == col) {
+                                    j = i+1;
+                                }
+                            }
+                            for (int i = 0; i < mazeSolutionSteps.size(); i++) {
+                                sol[0][i] = ((MazeState)(mazeSolutionSteps.get(j))).getPos().getRowIndex();
+                                sol[1][i] = ((MazeState)(mazeSolutionSteps.get(j))).getPos().getColumnIndex();
                             }
                         }
                         setChanged();
@@ -240,6 +247,7 @@ public class MyModel extends Observable implements IModel {
             Maze temp = (Maze)outputStream.readObject();
 
             setOriginMaze(temp);
+            setMaze(getOriginMaze().getMaze());
             setPositionRow(temp.getStartPosition().getRowIndex());
             setPositionCol(temp.getStartPosition().getColumnIndex());
             setGoalPosition(temp.getGoalPosition());

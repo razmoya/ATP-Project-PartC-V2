@@ -16,9 +16,10 @@ public class AboutController extends Observable implements Initializable {
         textInformation.setWrapText(true);
         textInformation.setText("""
                 This is a maze game based on Alice In Wonderland!
-                Help Alice reach the white rabbit and escape from the queen of hearts.
-                If you're having difficulties, try getting a clue or use the auto solver.
-                This game is brought to you by Gad and Raz LTD.""");
+                The maze is built using a Prim based algorithm.
+                It is solved using one of three search algorithms:
+                BFS, DFS and Best FS.
+                This game is brought to you by Gad Miller and Raz Moyal.""");
     }
 
     public void closeWindow() {
