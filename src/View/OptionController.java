@@ -17,7 +17,7 @@ public class OptionController implements Initializable {
     public ChoiceBox algorithms;
     public ChoiceBox mazeType;
     public ChoiceBox threadNum;
-    String algo="BFS";
+    public static String algo="BFS";
     String maze="MyMazeGenerator";
     String core="2";
 

@@ -6,6 +6,7 @@ import IO.MyDecompressorInputStream;
 import Server.Server;
 import Server.ServerStrategyGenerateMaze;
 import Server.ServerStrategySolveSearchProblem;
+import View.OptionController;
 import ViewModel.MyViewModel;
 import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.Position;
@@ -18,6 +19,12 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Observable;
+import java.util.Properties;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.config.Configurator;
+import Server.Configurations;
 
 /**
  * This class holds the logic to the game. It is observed by the ViewModel.
@@ -32,6 +39,7 @@ public class MyModel extends Observable implements IModel {
     private Maze originMaze;
     private boolean solved;
     private boolean gameIsOver;
+    private static final Logger LOG = LogManager.getLogger();
 
     /**
      * Generate a maze using the logic from part 2.
@@ -41,6 +49,7 @@ public class MyModel extends Observable implements IModel {
      */
     public int[][] generateMaze(int row1, int col1){
         Server serverMazeGenerator;
+        //LOG.info("SOME MESSAGE!");
         serverMazeGenerator = new Server(5400, 1000, new ServerStrategyGenerateMaze());
         serverMazeGenerator.start();
         try {
@@ -74,6 +83,8 @@ public class MyModel extends Observable implements IModel {
                 }
             });
             client.communicateWithServer();
+
+            LOG.info( client.toString() + " generated a new maze with " + row1 + " rows and " + col1 +" cols");
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
@@ -197,8 +208,22 @@ public class MyModel extends Observable implements IModel {
                 }
             });
             client.communicateWithServer();
+            //Configurations con = Configurations.instance();
+            InputStream input = new FileInputStream("./Resources/config.properties");
+            Properties prop = new Properties();
+            prop.load(input);
+            if(x.equals("solve")){
+                LOG.info(client.toString() + " has requested a solution, maze solved with " + prop.getProperty("mazeSearchingAlgorithm") + " algorithm");
+            }
+            else if(x.equals("clue")){
+                LOG.info(client.toString() + " has requested a clue");
+            }
         } catch (UnknownHostException e) {
             e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
         serverSolveMaze.stop();
         return sol;

@@ -1,0 +1,27 @@
+2022.07.01 14:59:31.366 INFO  Model.MyModel - SOME MESSAGE!
+2022.07.01 16:30:58.123 INFO  Model.MyModel - Client.Client@1a31e0e3generated new maze
+2022.07.01 16:31:19.089 INFO  Model.MyModel - Client.Client@2c3113eegenerated new maze
+2022.07.01 16:33:44.626 INFO  Model.MyModel - Client.Client@1cfed8b3 generated a new maze with 10 rows and 10 cols
+2022.07.01 16:33:56.501 INFO  Model.MyModel - Client.Client@5cb30f60 generated a new maze with 3 rows and 4 cols
+2022.07.01 16:56:00.547 INFO  Model.MyModel - Client.Client@6e545532 generated a new maze with 10 rows and 10 cols
+2022.07.01 16:56:09.930 INFO  Model.MyModel - Client.Client@3f88f09f has requested a solution, maze solved with null
+2022.07.01 16:58:18.272 INFO  Model.MyModel - Client.Client@2ff13e87 generated a new maze with 10 rows and 10 cols
+2022.07.01 16:58:41.281 INFO  Model.MyModel - Client.Client@3708872b has requested a solution, maze solved with null
+2022.07.01 16:59:48.670 INFO  Model.MyModel - Client.Client@7c756ff7 generated a new maze with 10 rows and 10 cols
+2022.07.01 16:59:50.720 INFO  Model.MyModel - Client.Client@41fac21c has requested a solution, maze solved with null
+2022.07.01 17:00:42.443 INFO  Model.MyModel - Client.Client@633cb795 generated a new maze with 10 rows and 10 cols
+2022.07.01 17:00:44.639 INFO  Model.MyModel - Client.Client@5a49d07e has requested a solution, maze solved with null
+2022.07.01 17:18:36.199 INFO  Model.MyModel - Client.Client@2073a89d generated a new maze with 10 rows and 10 cols
+2022.07.01 17:21:06.466 INFO  Model.MyModel - Client.Client@5c5ab665 has requested a solution, maze solved with null
+2022.07.01 17:25:15.445 INFO  Model.MyModel - Client.Client@1017e577 generated a new maze with 10 rows and 10 cols
+2022.07.01 17:46:33.746 INFO  Model.MyModel - Client.Client@22202fdd generated a new maze with 10 rows and 10 cols
+2022.07.01 17:46:38.066 INFO  Model.MyModel - Client.Client@3dc4a4dc has requested a solution, maze solved with DepthFirstSearch
+2022.07.01 17:48:59.843 INFO  Model.MyModel - Client.Client@7c756ff7 generated a new maze with 10 rows and 10 cols
+2022.07.01 17:49:02.165 INFO  Model.MyModel - Client.Client@6cd51ec4 has requested a clue
+2022.07.01 17:49:10.231 INFO  Model.MyModel - Client.Client@790618c2 has requested a clue
+2022.07.01 17:49:15.265 INFO  Model.MyModel - Client.Client@1f1ee52d has requested a clue
+2022.07.01 17:49:22.322 INFO  Model.MyModel - Client.Client@749fe127 has requested a clue
+2022.07.01 17:49:27.916 INFO  Model.MyModel - Client.Client@28f3e87c has requested a clue
+2022.07.01 17:49:32.081 INFO  Model.MyModel - Client.Client@cc32bdf has requested a solution, maze solved with DepthFirstSearch
+2022.07.02 16:29:17.771 INFO  Model.MyModel - Client.Client@13f57702 generated a new maze with 10 rows and 10 cols
+2022.07.02 16:29:56.666 INFO  Model.MyModel - Client.Client@703c21c3 generated a new maze with 10 rows and 10 cols
